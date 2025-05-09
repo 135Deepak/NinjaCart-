@@ -1,0 +1,133 @@
+/* Reset and basic styles */
+
+
+body {
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4CAF50;
+  padding: 0px;
+
+  /* 👇 Added to make header sticky */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  
+}
+
+
+.logo {
+  height: 50px;
+}
+
+.icon {
+  height: 30px;
+  margin-left: 20px;
+}
+
+#sections {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 15px;
+  position: fixed;
+  top: 70px;
+  bottom: 0;
+}
+
+#content {
+  margin-left:150px;
+  padding: 150px;
+  
+}
+
+.products {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.product {
+  width: 200px;
+  text-align: center;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+  width: 100px;
+  height: 100px;
+}
+
+button {
+  margin-top: 10px;
+  background-color: #141514;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+main {
+  padding: 20px;
+}
+
+#cart-items div {
+  margin-bottom: 15px;
+}
+.cart-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background-color: #f0f2ec;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+#payment-section button,
+#payment-form button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #2b9348;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#payment-section img,
+#payment-form img {
+  margin-top: 10px;
+}
+
+
+
+

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - NinjaCart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            padding: 5px;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            object-fit: cover;
+}
+        h1 {
+            color: #27b54f;
+        }
+        .section {
+            margin-bottom:40px;
+        }
+        .section h2 {
+            color: #fbfbfb;
+        }
+        .section p {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<header style="position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #3de30a;">
+    <div style="display: flex; align-items: center;">
+        <img src="images/logo.png" alt="Logo" style="height: 50px;">
+        <span style="font-size: 24px; font-weight: bold; margin-left: 10px;">ninjaCart</span>
+    </div>
+    <style>
+        .header-right {
+            margin-right: 1cm;
+        }
+    </style>
+    <div class="header-right">
+        <a href="ninja.html" style="text-decoration: none;">
+            <button class="home-button" onclick="location.href='ninja.html'">🏠 Home</button>
+        </a>
+    </div>
+</header>
+<body>
+    <h1>About NinjaCart</h1>
+    <video autoplay muted loop id="bg-video">
+        <source src="images\video.mp4" type="video/mp4">
+       
+    </video>
+
+    <div class="section">
+        <h2>How It Works</h2>
+        <p>NinjaCart is a platform that connects local farmers, grocery suppliers, and consumers. Users can browse a wide range of products categorized into vegetables, fruits, and groceries. Simply select the items you want to buy and add them to your cart.</p>
+    </div>
+
+    <div class="section">
+        <h2>How Products Are Bought</h2>
+        <p>After adding items to your cart, proceed to checkout. You will be shown a summary of your order and total price. Once you click "Pay Now", the order is processed and confirmed. A delivery executive picks up the items from verified sellers and delivers them to your doorstep.</p>
+    </div>
+
+    <div class="section">
+        <h2>Product Certification</h2>
+        <p>All our vendors are registered and vetted through a verification process. Products are sourced directly from certified farms and authorized distributors. Quality checks are conducted to ensure freshness, cleanliness, and proper packaging before delivery.</p>
+    </div>
+</body>
+</html>

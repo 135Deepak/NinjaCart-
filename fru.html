@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fruits - Ninja Cart</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { font-family: 'Times New Roman', Times, serif; padding: 20px; background-color: #fffdf5; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #76e925; color: white; }
+    header h1 { margin: 0; }
+    .home-button { background-color: white; color: #8ccd1b; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; }
+    .home-button:hover { background-color: #fff1d6; }
+    .product { border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin: 10px; display: inline-block; width: 200px; text-align: center; background: #fff; }
+    .product img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
+    button { margin-top: 10px; padding: 5px 10px; border-radius: 5px; background: #86dc0d; color: white; border: none; cursor: pointer; }
+    button:hover { background: #11f20d; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fruits</h1>
+    <button class="home-button" onclick="location.href='ninja.html'">🏠 Home</button>
+  </header>
+  <div id="product-list"></div>
+
+  <script>
+    const items = [
+      { id: 101, name: "Apple", price: 240, img: "images/fruits/apple.jpeg" },
+      { id: 102, name: "Grapes", price: 100, img: "images/fruits/grapes.jpeg" },
+      { id: 103, name: "Banana", price: 90, img: "images/fruits/banana.jpeg" },
+      { id: 104, name: "Orange", price: 80, img: "images/fruits/orange.jpeg" },
+      { id: 105, name: "Papaya", price: 40, img: "images/fruits/papaya.jpeg" },
+      { id: 106, name: "Musk Melon", price: 60, img: "images/fruits/musk.jpeg" },
+      { id: 107, name: "Mango", price: 140, img: "images/fruits/mango.jpeg" },
+      { id: 108, name: "Pineapple", price: 60, img: "images/fruits/pine.jpeg" },
+      { id: 109, name: "WaterMelon", price: 50, img: "images/fruits/water.jpeg" },
+      { id: 110, name: "BlueBerry", price: 95, img: "images/fruits/blue.jpeg" },
+      { id: 111, name: "Cherry", price: 120, img: "images/fruits/cherry.jpeg" },
+      { id: 112, name: "Apricot", price: 320, img: "images/fruits/apri.jpeg" },
+      { id: 113, name: "Avocado", price: 250, img: "images/fruits/avo.jpeg" },
+      { id: 114, name: "Strawberry", price: 100, img: "images/fruits/straw.jpeg" },
+      { id: 115, name: "Plum", price: 220, img: "images/fruits/plum.jpeg" }
+    ];
+
+    const container = document.getElementById('product-list');
+
+    items.forEach(item => {
+      const product = document.createElement('div');
+      product.className = 'product';
+      product.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" />
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+        <button onclick="addToCart(${item.id}, '${item.name}', ${item.price})">Add to Cart</button>`;
+      container.appendChild(product);
+    });
+
+    function addToCart(id, name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const index = cart.findIndex(item => item.id === id);
+      if (index > -1) {
+        cart[index].quantity += 1;
+      } else {
+        cart.push({ id, name, price, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${name} added to cart.`);
+    }
+  </script>
+</body>
+</html>

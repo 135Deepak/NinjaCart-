@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegetables - Ninja Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; padding: 20px; background-color: #f5fff5; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #4CAF50; color: white; }
+        header h1 { margin: 0; }
+        .home-button { background-color: white; color: #4CAF50; padding: 8px 16px; border: none; border-radius: 3px; cursor: pointer; }
+        .home-button:hover { background-color: #e0ffe0; }
+        .product { border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin: 10px; display: inline-block; width: 200px; text-align: center; background: #fff; }
+        .product img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
+        button { margin-top: 10px; padding: 5px 10px; border-radius: 5px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Vegetables</h1>
+        <button class="home-button" onclick="location.href='ninja.html'">🏠 Home</button>
+    </header>
+    <div id="product-list"></div>
+
+    <script>
+        const vegetables = [
+            { id: 1, name: "Tomato", price: 20, img: "images/vegetables/tamatoes.jpeg" },
+            { id: 2, name: "Potato", price: 30, img: "images/vegetables/potato.jpeg" },
+            { id: 3, name: "Carrot", price: 25, img: "images/vegetables/carrot.jpeg" },
+            { id: 4, name: "Onion", price: 35, img: "images/vegetables/onion.jpeg" },
+            { id: 5, name: "Beans", price: 40, img: "images/vegetables/beans.jpeg" },
+            { id: 6, name: "Capsicum", price: 45, img: "images/vegetables/capsicum.jpeg" },
+            { id: 7, name: "Cabbage", price: 20, img: "images/vegetables/cabbage.jpeg" },
+            { id: 8, name: "Cauliflower", price: 30, img: "images/vegetables/cauli.jpeg" },
+            { id: 9, name: "Brinjal", price: 25, img: "images/vegetables/brinjal.jpeg" },
+            { id: 10, name: "Chilli", price: 10, img: "images/vegetables/chilli.jpeg" },
+            { id: 11, name: "Spinach", price: 15, img: "images/vegetables/spinach.jpeg" },
+            { id: 12, name: "Peas", price: 35, img: "images/vegetables/peas.jpeg" },
+            { id: 13, name: "Drumstick", price: 30, img: "images/vegetables/drum.jpeg" },
+            { id: 14, name: "Sweet Corn", price: 20, img: "images/vegetables/sweet.jpeg" },
+            { id: 15, name: "Radish", price: 18, img: "images/vegetables/radish.jpeg" }
+        ];
+
+        const container = document.getElementById('product-list');
+
+        vegetables.forEach(item => {
+            const product = document.createElement('div');
+            product.className = 'product';
+            product.innerHTML = `
+                <img src="${item.img}" alt="${item.name}" />
+                <h3>${item.name}</h3>
+                <p>₹${item.price}</p>
+                <button onclick="addToCart(${item.id}, '${item.name}', ${item.price})">Add to Cart</button>`;
+            container.appendChild(product);
+        });
+
+        function addToCart(id, name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const index = cart.findIndex(item => item.id === id);
+            if (index > -1) {
+                cart[index].quantity += 1;
+            } else {
+                cart.push({ id, name, price, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${name} added to cart.`);
+        }
+    </script>
+</body>
+</html>

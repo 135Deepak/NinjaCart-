@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Cart - Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .required-label::after {
+            content: " *";
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="images/video.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="images/logo.png" alt="Logo" style="height: 50px;">
+            <span style="font-size: 24px; font-weight: bold; margin-left: 10px;">ninjaCart</span>
+        </div>
+        <div class="header-right">
+            <button class="home-button" onclick="location.href='ninja.html'">🏠 Home</button>
+        </div>
+    </header>
+
+    <div class="cart-container">
+        <main>
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <h3 id="total-price">Total: ₹0</h3>
+            <button onclick="payNow()">Pay Now</button>
+
+            <div id="payment-section" style="display: none; margin-top: 20px;">
+                <h3>Select Payment Method:</h3>
+                <button onclick="selectPayment('UPI')">
+                    <img src="images/upi.webp" alt="UPI" style="height: 20px;"> UPI
+                </button>
+                <button onclick="selectPayment('Card')">
+                    <img src="images/card.webp" alt="Card" style="height: 20px;"> Card
+                </button>
+                <button onclick="selectPayment('COD')">
+                    <img src="images/cod.png" alt="Cash on Delivery" style="height: 20px;"> Cash on Delivery
+                </button>
+            </div>
+
+            <div id="payment-form" style="display: none; margin-top: 20px;"></div>
+            <div id="confirmation" style="margin-top: 20px; font-weight: bold; color: green;"></div>
+
+            <button onclick="location.href='ninja.html'">Back to Home</button>
+        </main>
+    </div>
+
+    <script>
+        let selectedPaymentMethod = '';
+
+        function displayCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = '';
+            let itemMap = {};
+
+            cart.forEach(item => {
+                if (!itemMap[item.name]) {
+                    itemMap[item.name] = { price: item.price, quantity: 0 };
+                }
+                itemMap[item.name].quantity++;
+            });
+
+            let total = 0;
+
+            for (let name in itemMap) {
+                let item = itemMap[name];
+                total += item.price * item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `
+                    <p>${name} - ₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}</p>
+                    <button onclick="changeQuantity('${name}', 1)">+</button>
+                    <button onclick="changeQuantity('${name}', -1)">-</button>
+                `;
+                cartItemsDiv.appendChild(itemDiv);
+            }
+
+            document.getElementById('total-price').innerText = `Total: ₹${total}`;
+        }
+
+        function changeQuantity(name, delta) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (delta > 0) {
+                const item = cart.find(item => item.name === name);
+                cart.push(item);
+            } else {
+                const index = cart.findIndex(item => item.name === name);
+                if (index > -1) cart.splice(index, 1);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+
+        function payNow() {
+            document.getElementById('payment-section').style.display = 'block';
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('confirmation').innerText = '';
+        }
+
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            let form = '';
+            if (method === 'UPI') {
+                form = `
+                    <label class="required-label" for="upi-id">Enter UPI ID:</label><br>
+                    <input type="text" placeholder="example@upi" id="upi-id" required><br><br>
+                    <img src="images/QR.png" alt="QR Code" style="height: 150px;"><br><br>
+                `;
+            } else if (method === 'Card') {
+                form = `
+                    <label class="required-label" for="card-number">Card Number:</label><br>
+                    <input type="text" placeholder="Card Number" id="card-number" required><br><br>
+                    <label class="required-label" for="expiry">Expiry Date (MM/YY):</label><br>
+                    <input type="text" placeholder="MM/YY" id="expiry" required><br><br>
+                    <label class="required-label" for="cvv">CVV:</label><br>
+                    <input type="text" placeholder="CVV" id="cvv" required><br><br>
+                    <img src="images/QR.png" alt="QR Code" style="height: 150px;"><br><br>
+                `;
+            } else if (method === 'COD') {
+                form = `<p>You will pay with cash upon delivery.</p>`;
+            }
+
+            form += `<button onclick="askCustomerDetails()">Confirm Payment</button>`;
+            document.getElementById('payment-form').innerHTML = form;
+            document.getElementById('payment-form').style.display = 'block';
+        }
+
+        function askCustomerDetails() {
+            // Validate payment fields before proceeding
+            if (selectedPaymentMethod === 'UPI') {
+                const upiId = document.getElementById('upi-id').value.trim();
+                if (!upiId) {
+                    alert("UPI ID is required. Please enter your UPI ID.");
+                    return;
+                }
+            } else if (selectedPaymentMethod === 'Card') {
+                const cardNumber = document.getElementById('card-number').value.trim();
+                const expiry = document.getElementById('expiry').value.trim();
+                const cvv = document.getElementById('cvv').value.trim();
+                if (!cardNumber || !expiry || !cvv) {
+                    alert("All card details are required. Please fill out all the fields.");
+                    return;
+                }
+            }
+
+            document.getElementById('payment-form').innerHTML = `
+                <h4>Enter Your Details</h4>
+                <label class="required-label" for="full-name">Full Name:</label><br>
+                <input type="text" placeholder="Full Name" id="full-name" required><br><br>
+                <label class="required-label" for="address">Address:</label><br>
+                <input type="text" placeholder="Address" id="address" required><br><br>
+                <label class="required-label" for="phone-number">Phone Number:</label><br>
+                <input type="text" placeholder="Phone Number" id="phone-number" required><br><br>
+                <button onclick="finalConfirmation()">Place Order</button>
+                <button onclick="selectPayment('${selectedPaymentMethod}')">Back</button>
+            `;
+        }
+
+        function finalConfirmation() {
+            const fullName = document.getElementById('full-name').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const phoneNumber = document.getElementById('phone-number').value.trim();
+
+            if (!fullName || !address || !phoneNumber) {
+                alert("All fields are mandatory. Please fill out all the details.");
+                return;
+            }
+
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('confirmation').innerText =
+                "Order placed successfully using " + selectedPaymentMethod + "!";
+        }
+
+        window.onload = displayCart;
+    </script>
+</body>
+</html>

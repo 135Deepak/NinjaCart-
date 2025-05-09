@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dairy - Ninja Cart</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { font-family: 'Times New Roman', Times, serif; padding: 20px; background-color: #fffdf5; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #738f5f; color: white; }
+    header h1 { margin: 0; }
+    .home-button { background-color: white; color: #879a65; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; }
+    .home-button:hover { background-color: #fff1d6; }
+    .product { border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin: 10px; display: inline-block; width: 200px; text-align: center; background: #fff; }
+    .product img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
+    button { margin-top: 10px; padding: 5px 10px; border-radius: 5px; background: #8a9c72; color: white; border: none; cursor: pointer; }
+    button:hover { background: #627f62; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dairy Products</h1>
+    <button class="home-button" onclick="location.href='ninja.html'">🏠 Home</button>
+  </header>
+  <div id="product-list"></div>
+
+  <script>
+    const items = [
+      { id: 101, name: "Milk", price: 52, img: "images/Dairy/milk.jpeg" },
+      { id: 102, name: "Curd", price: 26, img: "images/Dairy/curd.jpeg" },
+      { id: 103, name: "Butter", price: 90, img: "images/Dairy/butter.jpeg" },
+      { id: 104, name: "Cheese", price: 80, img: "images/Dairy/cheese.jpeg" },
+      { id: 105, name: "Ice Cream", price: 40, img: "images/Dairy/ice.jpeg" },
+      { id: 106, name: "Ghee", price: 100, img: "images/Dairy/ghee.jpeg" },
+      { id: 107, name: "Paneer", price: 100, img: "images/Dairy/panner.jpeg" },
+      { id: 108, name: "Butter Milk", price: 6, img: "images/Dairy/buttermilk.jpeg" },
+      { id: 109, name: "Condensed milk", price: 50, img: "images/Dairy/condensed.jpeg" },
+      { id: 110, name: "Lassi", price: 95, img: "images/Dairy/lassi.jpeg" },
+      { id: 111, name: "Milk Powder", price: 10, img: "images/Dairy/powder.jpeg" },
+      { id: 112, name: "Yogurt", price: 52, img: "images/Dairy/yog.jpeg" },
+      { id: 113, name: "Cream", price: 250, img: "images/Dairy/cream.jpeg" },
+      { id: 114, name: "Kafir", price: 520, img: "images/Dairy/kafir.jpeg" },
+      { id: 115, name: "Khoya", price: 150-400, img: "images/Dairy/khoya.jpeg" }
+    ];
+
+    const container = document.getElementById('product-list');
+
+    items.forEach(item => {
+      const product = document.createElement('div');
+      product.className = 'product';
+      product.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" />
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+        <button onclick="addToCart(${item.id}, '${item.name}', ${item.price})">Add to Cart</button>`;
+      container.appendChild(product);
+    });
+
+    function addToCart(id, name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const index = cart.findIndex(item => item.id === id);
+      if (index > -1) {
+        cart[index].quantity += 1;
+      } else {
+        cart.push({ id, name, price, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${name} added to cart.`);
+    }
+  </script>
+</body>
+</html>

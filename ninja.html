@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Cart - Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<video autoplay muted loop id="bg-video">
+    <source src="images/video.mp4" type="video/mp4">
+</video>
+
+<header>
+    <div style="display: flex; align-items: center;">
+        <img src="images/logo.png" alt="Logo" style="height: 70px;">
+        <span style="font-size: 30px; font-weight: bold; margin-left: 10px;">NinjaCart</span>
+    </div>
+   
+
+    <div style="flex: 1; text-align: right;">
+        <span id="welcome-msg" style="font-weight: bold; color: green;"></span>
+    </div>
+    <div class="header-right">
+        <a href="cart.html"><img src="images/cart.png" alt="Cart" class="icon"></a>
+        <a href="login.html"><img src="images/profile.png" alt="Profile" class="icon"></a>
+        <a href="about.html"><img src="images/about.png" alt="About" class="icon"></a>
+    </div>
+</header>
+
+<div id="sections" style="width: 15%; float: left; padding: 20px; background-color: #f9f9f9; border-right: 1px solid #f0d2d2;">
+    <h3 style="text-align: center; font-weight: bold;">Categories</h3>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="veg.html" style="text-decoration: none; color: black;">
+            <img src="images/vegetables/vege.webp" alt="Vegetables" style="width: 50px; height: 50px;">
+            <p style="margin-top: 10px; font-size: 16px;">Vegetables</p>
+        </a>
+    </div>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="fru.html" style="text-decoration: none; color: black;">
+            <img src="images/fruits/fru.webp" alt="Fruits" style="width: 50px; height: 50px;">
+            <p style="margin-top: 10px; font-size: 16px;">Fruits</p>
+        </a>
+    </div>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="gro.html" style="text-decoration: none; color: black;">
+            <img src="images/grocery/gro.webp" alt="Groceries" style="width: 50px; height: 50px;">
+            <p style="margin-top: 10px; font-size: 16px;">Groceries</p>
+        </a>
+    </div>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="dai.html" style="text-decoration: none; color: black;">
+            <img src="images/Dairy/dai.webp" alt="Dairyproducts" style="width: 50px; height: 50px;">
+            <p style="margin-top: 10px; font-size: 16px;">Dairy Products</p>
+        </a>
+    </div>
+</div>
+
+<div id="content" style="margin-left: 20%; padding: 20px;">
+    <h2 id="vegetables">Our Products</h2>
+    <div class="products">
+        <div class="product" data-name="tomato">
+            <img src="images/vegetables/tamatoes.jpeg" alt="Tomato">
+            <p>Tomato - ₹30</p>
+            <button onclick="addToCart('Tomato', 30)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="potato">
+            <img src="images/vegetables/potato.jpeg" alt="Potato">
+            <p>Potato - ₹20</p>
+            <button onclick="addToCart('Potato', 20)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="cauliflower">
+            <img src="images/vegetables/cauli.jpeg" alt="Cauliflower">
+            <p>Cauliflower - ₹20</p>
+            <button onclick="addToCart('Cauliflower', 20)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="apple">
+            <img src="images/fruits/apple.jpeg" alt="Apple">
+            <p>Apple - ₹240</p>
+            <button onclick="addToCart('Apple', 240)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="chilli powder">
+            <img src="images/grocery/chiili.jpeg" alt="Chilli Powder">
+            <p>Chilli Powder - ₹80</p>
+            <button onclick="addToCart('Chilli Powder', 80)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="pepper">
+            <img src="images/grocery/pepper.jpeg" alt="Pepper">
+            <p>Pepper - ₹100</p>
+            <button onclick="addToCart('Pepper', 100)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="salt">
+            <img src="images/grocery/salt.jpeg" alt="Salt">
+            <p>Salt - ₹18</p>
+            <button onclick="addToCart('Salt', 18)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="ridge gaurd">
+            <img src="images/vegetables/ridge.jpeg" alt="Ridge Gaurd">
+            <p>Ridge Gaurd - ₹45</p>
+            <button onclick="addToCart('Ridge Gaurd', 45)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="cabbage">
+            <img src="images/vegetables/cabbage.jpeg" alt="Cabbage">
+            <p>Cabbage - ₹20</p>
+            <button onclick="addToCart('Cabbage', 20)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="kiwi">
+            <img src="images/fruits/kiwi.jpeg" alt="Kiwi">
+            <p>Kiwi - ₹25/piece</p>
+            <button onclick="addToCart('Kiwi', 25)">Add to Cart</button>
+        </div>
+        <div class="product" data-name="onion">
+            <img src="images/vegetables/onion.jpeg" alt="Onion">
+            <p>Onion - ₹25</p>
+            <button onclick="addToCart('Onion', 25)">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function addToCart(name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({name: name, price: price});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(name + " added to cart!");
+    updateFooterCart();
+}
+
+
+
+const user = localStorage.getItem("ninjacartWelcome");
+if (user) {
+    document.getElementById("welcome-msg").textContent = `Welcome, ${user}!`;
+    localStorage.removeItem("ninjacartWelcome");
+}
+
+
+</script>
+
+</body>
+</html>
