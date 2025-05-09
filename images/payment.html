@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment & Delivery</title>
+  <style>
+    .hidden { display: none; }
+    .item-entry { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Confirm Payment</h2>
+  <button id="confirmPaymentBtn">Confirm Payment</button>
+
+  <div id="deliveryForm" class="hidden">
+    <h3>Delivery Information</h3>
+    <label>Name: <input type="text" id="name"></label><br>
+    <label>Address: <input type="text" id="address"></label><br>
+    <label>Phone: <input type="text" id="phone"></label><br><br>
+
+    <h3>Items</h3>
+    <div id="itemsContainer"></div>
+    <button id="addItemBtn">Add Item</button><br><br>
+
+    <button id="generateBillBtn">Generate Bill</button>
+
+    <h3>Total: ₹<span id="totalAmount">0</span></h3>
+    <div id="billOutput"></div>
+  </div>
+
+  <script>
+    const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+    const deliveryForm = document.getElementById('deliveryForm');
+    const addItemBtn = document.getElementById('addItemBtn');
+    const itemsContainer = document.getElementById('itemsContainer');
+    const totalAmount = document.getElementById('totalAmount');
+    const generateBillBtn = document.getElementById('generateBillBtn');
+    const billOutput = document.getElementById('billOutput');
+
+    let itemIndex = 0;
+    let items = [];
+
+    confirmPaymentBtn.onclick = () => {
+      deliveryForm.classList.remove('hidden');
+    };
+
+    addItemBtn.onclick = () => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'item-entry';
+      itemDiv.innerHTML = `
+        Item Name: <input type="text" class="item-name" placeholder="e.g., Onion">
+        Quantity: <input type="number" class="item-qty" value="1" min="1">
+        Price (₹): <input type="number" class="item-price" value="0" min="0">
+      `;
+      itemsContainer.appendChild(itemDiv);
+    };
+
+    generateBillBtn.onclick = () => {
+      const names = document.querySelectorAll('.item-name');
+      const qtys = document.querySelectorAll('.item-qty');
+      const prices = document.querySelectorAll('.item-price');
+      let total = 0;
+      let billHTML = '<h4>Final Bill</h4><ul>';
+
+      for (let i = 0; i < names.length; i++) {
+        const name = names[i].value;
+        const qty = parseInt(qtys[i].value);
+        const price = parseFloat(prices[i].value);
+        const cost = qty * price;
+        total += cost;
+        billHTML += `<li>${qty} x ${name} @ ₹${price} = ₹${cost}</li>`;
+      }
+
+      billHTML += `</ul><strong>Total: ₹${total}</strong>`;
+      totalAmount.textContent = total;
+      billOutput.innerHTML = billHTML;
+    };
+  </script>
+</body>
+</html>
