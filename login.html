@@ -115,7 +115,7 @@
 
     // Redirect and save username for greeting
     localStorage.setItem("ninjacartWelcome", username);
-    window.location.href = "ninja.html";
+    window.location.href = "index.html";
   }
 
   function login() {
@@ -127,7 +127,7 @@
       document.getElementById("login-message").innerText = "Invalid username or password.";
     } else {
       localStorage.setItem("ninjacartWelcome", username);
-      window.location.href = "ninja.html";
+      window.location.href = "index.html";
     }
     window.location.href = "deals.html";
 
@@ -136,3 +136,4 @@
 
 </body>
 </html>
+
